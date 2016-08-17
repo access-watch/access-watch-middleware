@@ -1,0 +1,40 @@
+{
+  "name": "access-watch-middleware",
+  "version": "1.0.0",
+  "description": "Connect/Express.js middleware for logging and analyzing web traffic using the AccessWatch service.",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test.js | faucet",
+    "lint": "eslint *.js",
+    "example": "node ./example/server.js",
+    "cover": "nyc --check-coverage npm test",
+    "coveralls": "nyc --check-coverage --reporter=text-lcov npm test | coveralls"
+  },
+  "repository": "https://github.com/access-watch/access-watch-middlware",
+  "keywords": [
+    "accesswatch",
+    "access",
+    "watch",
+    "connect",
+    "express"
+  ],
+  "author": "johannes@access.watch",
+  "license": "MIT",
+  "dependencies": {
+    "access-watch-node": "^1.0.0",
+    "debug": "^2.2.0"
+  },
+  "devDependencies": {
+    "coveralls": "^2.11.12",
+    "faucet": "0.0.1",
+    "nyc": "^8.1.0",
+    "proxyquire": "^1.7.10",
+    "tape": "^4.6.0"
+  },
+  "peerDependencies": {
+    "express": "^4.14.0"
+  },
+  "optionalDependencies": {
+    "cache-manager": "^2.1.2"
+  }
+}
