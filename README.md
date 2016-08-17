@@ -12,10 +12,10 @@ npm install --save access-watch-middleware
 ## Usage ##
 
 The `config` object is directly passed to
-[access-watch-node](/access-watch/access-watch-node). Required parameters are `apiKey` and
-[`cache`](/access-watch/access-watch-node/blob/master/api.md#AccessWatch.Cache).
+[access-watch-node](https://github.com/access-watch/access-watch/access-watch-node). Required parameters are `apiKey` and
+[`cache`](https://github.com/access-watch/access-watch/access-watch-node/blob/master/api.md#AccessWatch.Cache).
 If your application is behind a reverse proxy, you also need to set
-[`fwdHeaders`](/access-watch-node/blob/master/api.md#accesswatchfwdheaders--accesswatchforwardheaders).
+[`fwdHeaders`](https://github.com/access-watch/access-watch-node/blob/master/api.md#accesswatchfwdheaders--accesswatchforwardheaders).
 
 See [access-watch-node](https://github.com/access-watch/access-watch-node) for details.
 
