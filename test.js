@@ -1,6 +1,56 @@
 const proxyquire = require('proxyquire').noCallThru();
 const test = require('tape');
 
+const dummyCache = {
+  get: cb => cb(),
+  set: cb => cb(),
+  drop: cb => cb()
+};
+
+test('it handles configuration', t => {
+  t.plan(4);
+  let AccessWatchMiddleware;
+  let testConfig;
+
+  testConfig = {
+    apiKey: '12345',
+  };
+
+  AccessWatchMiddleware = proxyquire('./index', {
+    'cache-manager': {
+      caching: () => {
+        t.pass('creates its own cache');
+        return 'yay cache!';
+      }
+    },
+    'node-access-watch': function(c) {
+      t.notDeepEqual(c, testConfig);
+      t.equal('yay cache!', c.cache);
+      this.hello = _ => Promise.resolve();
+    }
+  });
+  AccessWatchMiddleware(testConfig);
+
+  testConfig = {
+    apiKey: '12345',
+    cache: dummyCache
+  };
+
+  AccessWatchMiddleware = proxyquire('./index', {
+    'cache-manager': {
+      caching: () => {
+        t.fail('should use the provided cache');
+      }
+    },
+    'node-access-watch': function(c) {
+      t.deepEqual(c, testConfig);
+      this.hello = _ => Promise.resolve();
+    }
+  });
+  AccessWatchMiddleware(testConfig);
+
+
+});
 
 test('call hello() on init', t => {
   t.plan(1);
@@ -12,7 +62,7 @@ test('call hello() on init', t => {
       };
     }
   });
-  AccessWatchMiddleware();
+  AccessWatchMiddleware({});
 });
 
 test('call checkBlocked() on request', childTest => {
@@ -43,7 +93,7 @@ test('call checkBlocked() on request', childTest => {
       }
     });
 
-    AccessWatchMiddleware()(mockReq, mockRes, () => {
+    AccessWatchMiddleware({})(mockReq, mockRes, () => {
       t.fail('should not continue');
     });
   });
@@ -56,16 +106,16 @@ test('call checkBlocked() on request', childTest => {
     };
 
     const AccessWatchMiddleware = proxyquire('./index', {
-      'node-access-watch': function () {
+      'node-access-watch': function() {
         this.hello = () => Promise.resolve();
-        this.checkBlocked = (req) => {
+        this.checkBlocked = req => {
           t.same(req, mockReq, 'checkBlocked(req) was called');
           return Promise.resolve(false);
         };
       }
     });
 
-    AccessWatchMiddleware()(mockReq, mockRes, () => {
+    AccessWatchMiddleware({})(mockReq, mockRes, () => {
       t.pass('should continue to next middlware');
     });
   });
@@ -95,6 +145,6 @@ test('call log() after response', t => {
     }
   });
 
-  AccessWatchMiddleware()(mockReq, mockRes, () => {});
+  AccessWatchMiddleware({})(mockReq, mockRes, () => {});
 });
 

@@ -1,9 +1,20 @@
+'use strict';
 const httpStatus = require('http').STATUS_CODES;
 
 const debug = require('debug')('access-watch-middleware');
 const AccessWatch = require('node-access-watch');
 
 module.exports = config => {
+  if (!config.cache) {
+    // use in-memory cache if not specified
+    config = Object.assign({
+      cache: require('cache-manager').caching({
+        store: 'memory',
+        ttl: 20 * 60
+      })
+    }, config);
+  }
+
   const aw = new AccessWatch(config);
 
   // Say hello to access watch and see that give's a pleasent response
