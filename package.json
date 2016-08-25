@@ -1,6 +1,6 @@
 {
   "name": "access-watch-middleware",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Connect/Express.js middleware for logging and analyzing web traffic using the AccessWatch service.",
   "main": "index.js",
   "scripts": {
