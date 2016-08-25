@@ -24,7 +24,7 @@ test('it handles configuration', t => {
         return 'yay cache!';
       }
     },
-    'node-access-watch': function(c) {
+    'access-watch-node': function(c) {
       t.notDeepEqual(c, testConfig);
       t.equal('yay cache!', c.cache);
       this.hello = _ => Promise.resolve();
@@ -43,7 +43,7 @@ test('it handles configuration', t => {
         t.fail('should use the provided cache');
       }
     },
-    'node-access-watch': function(c) {
+    'access-watch-node': function(c) {
       t.deepEqual(c, testConfig);
       this.hello = _ => Promise.resolve();
     }
@@ -56,7 +56,7 @@ test('it handles configuration', t => {
 test('call hello() on init', t => {
   t.plan(1);
   const AccessWatchMiddleware = proxyquire('./index', {
-    'node-access-watch': function() {
+    'access-watch-node': function() {
       this.hello = function() {
         t.pass('hello() was called');
         return Promise.resolve();
@@ -85,7 +85,7 @@ test('call checkBlocked() on request', childTest => {
     };
 
     const AccessWatchMiddleware = proxyquire('./index', {
-      'node-access-watch': function() {
+      'access-watch-node': function() {
         this.hello = () => Promise.resolve();
         this.checkBlocked = function(req) {
           t.same(req, mockReq, 'checkBlocked(req) was called');
@@ -107,7 +107,7 @@ test('call checkBlocked() on request', childTest => {
     };
 
     const AccessWatchMiddleware = proxyquire('./index', {
-      'node-access-watch': function() {
+      'access-watch-node': function() {
         this.hello = () => Promise.resolve();
         this.checkBlocked = req => {
           t.same(req, mockReq, 'checkBlocked(req) was called');
@@ -133,7 +133,7 @@ test('call log() after response', t => {
     }
   };
   const AccessWatchMiddleware = proxyquire('./index', {
-    'node-access-watch': function() {
+    'access-watch-node': function() {
 
       // make these can also reject
       this.hello = () => Promise.reject();

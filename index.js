@@ -2,7 +2,7 @@
 const httpStatus = require('http').STATUS_CODES;
 
 const debug = require('debug')('access-watch-middleware');
-const AccessWatch = require('node-access-watch');
+const AccessWatch = require('access-watch-node');
 
 module.exports = config => {
   if (!config.cache) {
