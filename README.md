@@ -12,10 +12,13 @@ npm install --save access-watch-middleware
 ## Usage ##
 
 The `config` object is directly passed to
-[access-watch-node](https://github.com/access-watch/access-watch/access-watch-node). Required parameters are `apiKey` and
-[`cache`](https://github.com/access-watch/access-watch/access-watch-node/blob/master/api.md#AccessWatch.Cache).
-If your application is behind a reverse proxy, you also need to set
-[`fwdHeaders`](https://github.com/access-watch/access-watch-node/blob/master/api.md#accesswatchfwdheaders--accesswatchforwardheaders).
+[access-watch-node](https://github.com/access-watch/access-watch/access-watch-node).
+- The only required parameters is `apiKey`.
+- You can optionally provide your own caching by passing
+  [`cache`](https://github.com/access-watch/access-watch/access-watch-node/blob/master/api.md#AccessWatch.Cache).
+  If `cache` is not provided, an in-memory cache will be used.
+- If your application is behind a reverse proxy, you will also need to set
+  [`fwdHeaders`](https://github.com/access-watch/access-watch-node/blob/master/api.md#accesswatchfwdheaders--accesswatchforwardheaders).
 
 See [access-watch-node](https://github.com/access-watch/access-watch-node) for details.
 
@@ -28,34 +31,7 @@ For example: `npm DEBUG=access-watch-middleware npm start`.
 
 ## Example ##
 
-```js
-'use strict';
-
-const express = require('express');
-const app = express();
-const accessWatchMiddleware = require('..');
-
-const cacheManager = require('cache-manager');
-
-const awCache = cacheManager.caching({
-  store: 'memory',
-  ttl: 20 * 60
-});
-
-app.use(accessWatchMiddleware({
-  apiKey: '1b3e63591870fdd1b3cd6eb304b81aa1',
-  cache: awCache
-}));
-
-app.get('/', (req, res, next) => {
-  res.send('Hello World!');
-  next();
-});
-
-app.listen(3000, () => {
-  console.log('Example app listening on port 3000!');
-});
-```
+[See the example code.](./example/server.js)
 
 Try it out by cloning this repo and run
 
