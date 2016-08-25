@@ -38,7 +38,11 @@ module.exports = config => {
       aw.log(req, res).then(_ => {
         debug('Logged request. HTTP headers: %j', req.headers);
       }).catch(err => {
-        debug('Error logging request. HTTP headers: %j. Error: %s', req.headers, err.message);
+        debug(
+          'Error logging request. HTTP headers: %j. Error: %s',
+          req.headers,
+          err.message
+        );
       });
     });
   };
